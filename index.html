@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .a{color: red;}
+        .b{color: green;}
+    </style>
+    <script src="/js/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <h1>1.渲染数据</h1>
+    <div id="app">
+        {{message}}
+    </div>
+    <br>
+    <div id="app-1">
+        <h1>2.鼠标悬停title</h1>
+        <span :title="message">
+            鼠标悬停查看绑定的内容
+        </span>
+    </div> 
+    <br>
+    <div id="app-2">
+        <h1>3.显示和隐藏</h1>
+        也可以是用vif但vif操作dom删除html标签，vshow是修改css属性，最好使用vshow，vif操作dom性能低
+        <br>
+        <br>
+        <span v-show="message">
+            显示和隐藏
+        </span>
+    </div>
+    <div id="app-3">
+        <h1>3.列表例子</h1>
+        vue列表对象.data.list.push();可以向数组中添加数据
+        vue列表对象.data.list.shift(2);可以移除指定的数据，不传参默认删除最后一个
+        <ol>
+            <li v-for="item in list">
+                {{item}}
+            </li>
+            <li v-for="item in list1">
+                姓名：{{item.name}}&nbsp;&nbsp;&nbsp;&nbsp;年龄：{{item.age}}
+            </li>
+        </ol>
+    </div>
+    <div id="app-4">
+        <h1>4.绑定点击事件</h1>
+        <p v-html=message></p>
+        <button v-on:click="app5Click">
+            按钮
+        </button>
+    </div>
+    <div id="app-5">
+        <h1>5.计数器</h1>
+        click中可以输入直接运行的代码，但是复杂情况不建议这样写，逻辑很容易被忽略也不美观
+        <p v-html=number></p>
+        <button v-on:click="number++">
+            +
+        </button>
+        <button v-on:click="number--">
+            -
+        </button>
+    </div>
+    <div id="app-6">
+        <h1>6.watch观察类似于changge对数据改变监听</h1>
+        <div>
+            {{message}}
+        </div>
+    </div>
+    <div id='app-7'>
+        <h1>7.v-once 停止响应式刷新数据</h1>
+        <a href="" v-once>{{message}}</a>
+        <br>
+        <a href="">{{message}}</a>
+    </div>
+    <div id='app-8'>
+        <h1>8.直接当作html加载进入</h1>
+        <p v-html="url"></p>
+    </div>
+    <div id='app-9'>
+        <h1>9.不经过编译直接添加进入dom节点</h1>
+        <p v-pre>{{url}}</p>
+    </div>
+    <div id='app-10'>
+        <h1>10.vue未执行绑定的js则不显示该dom节点。防止html加载了vue逻辑还未执行导致界面有延迟</h1>
+        <p v-cloak>{{meaasge}}</p>
+    </div>
+
+    <div id='app-11'>
+        <h1>11.动态绑定并切换class</h1>
+        <p v-bind:class="{a:isRed,b:isGreen}">{{message}}</p>
+    </div>
+
+    <div id='app-12'>
+        <h1>12.列表点击换颜色</h1>
+        <ul>
+            <li :class="[item.name,'app12-list']" v-for="(item,index) in items" v-on:click="changeColor(index)">{{item.name}}</li>
+        </ul>
+    </div>
+    <div id='app-13'>
+        <h1>13.计算属性</h1>
+        <span>{{count}}</span>
+    </div>
+
+    <h1>知识点提示：如果new Vue的时候传入function作为第一级的参数，会被vue调用一次</h1>
+    <textarea style="width: 500px;height: 180px;">
+        var app1 = new Vue({
+            el:"#app-1",
+            data:{
+                message:"当前时间：" + new Date().toLocaleString()
+            },
+            init:function(){
+                //这个function会被vue调用
+                console.log("1");
+            }
+        })
+    </textarea>
+</body>
+
+<script>
+    //1.响应式
+    var app = new Vue({
+        el:"#app",
+        data:{
+            message:"Hello!"
+        }
+    })
+    app.message="哈哈哈";
+    //2.bind数据
+    var app1 = new Vue({
+        el:"#app-1",
+        data:{
+            message:"当前时间：" + new Date().toLocaleString()
+        }
+    })
+    //3.显示与隐藏
+    var app2 = new Vue({
+        el:"#app-2",
+        data:{
+            message:true
+        }
+    })
+    //4.列表
+    var app3 = new Vue({
+        el:"#app-3",
+        data:{
+            list:["刘","关","张","赵","黄"],
+            list1:[
+                {'name':"name-1","age":12},
+                {'name':"name-2","age":13},
+                {'name':"name-3","age":14},
+                {'name':"name-4","age":15},
+            ]
+        }
+    })
+    //5.on事件
+    var app4 = new Vue({
+        el:"#app-4",
+        data:{
+            message:"请点击下方按钮"
+        },
+        methods:{
+            app5Click:function(){
+                this.message+="已经点击"
+            }
+        }
+    })
+    //6.计数器
+    var app5 = new Vue({
+        el:"#app-5",
+        data:{
+            number:0
+        }
+    })
+    //7.watch观察类似于changge对数据改变监听
+    var app6 = new Vue({
+        el:"#app-6",
+        data:{
+            message:"原始数据"
+        },
+        watch: {
+            message(newName, oldName){
+                console.log(newName+":::"+oldName);
+            }
+        }
+    })
+    setTimeout(function(){
+        app6.message="修改之后的数据"+ new Date().toLocaleString();
+    }, 2000)
+    //8.v-once
+    var app7 = new Vue({
+        el:'#app-7',
+        data:{
+            message:'Hello!'
+        }
+    })
+    app7.message="change";
+    //9.v-html
+    var app8 = new Vue({
+        el:'#app-8',
+        data:{
+            url:'<a href="http://www.baidu.com">百度一下</a>'
+        }
+    })
+    //10.v-pre
+    var app9 = new Vue({
+        el:'#app-9',
+        data:{
+            url:'<a href="http://www.baidu.com">百度一下</a>'
+        }
+    })
+    //10.v-cloak
+    var app10 = new Vue({
+        el:'#app-10',
+        data:{
+            message:'<百度一下>'
+        }
+    })
+    //10.动态绑定并切换class
+    var app11 = new Vue({
+        el:'#app-11',
+        data:{
+            isRed:false,
+            isGreen:false,
+            message:"文本内容"
+        }
+    })
+    setTimeout(function(){
+        app11.isRed = true;
+    },2000)
+    setTimeout(function(){
+        app11.isRed = false;
+        app11.isGreen = true;
+    },4000)
+    //11.列表点击切换颜色
+    var app12 = new Vue({
+        el:'#app-12',
+        data:{
+            items:[
+                {'name':"name-1","age":12},
+                {'name':"name-2","age":13},
+                {'name':"name-3","age":14},
+                {'name':"name-4","age":15},
+            ]
+        },
+        methods:{
+            changeColor:function(index){
+                var list = document.getElementsByClassName("app12-list");
+                for (let index = 0; index < list.length; index++) {
+                    const element = list[index];
+                    element.style.color='black';
+                }
+                const element = document.getElementsByClassName(this._data.items[index].name);
+                element[0].style.color='red';
+            }
+        }
+    })
+    //13.计算属性
+    var app13 = new Vue({
+        el:'#app-13',
+        computed:{
+            count:function(){
+                return this.a+this.b;
+            }
+        },
+        data:{
+            a:12,
+            b:16
+        }
+    })
+</script>
+</html>
+
+
+
