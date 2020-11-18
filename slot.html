@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/js/vue.js"></script>
+</head>
+<body>
+    <div id="app2">
+        <cpn ref="refs" @itemclick=emit><p>插槽1</p></cpn>
+        <cpn ref="refs" @itemclick=emit><p>插槽2</p></cpn>
+        <cpn ref="refs" @itemclick=emit><p>插槽3</p><p>插槽4</p></cpn>
+        <cpn ref="refs" @itemclick=emit></cpn>
+        <span>----------------------------------------------------------------------------------------</span>
+        <cpn ref="refs" @itemclick=emit>
+            <span slot="slot1">修改默认插槽1</span><br>
+            <span slot="slot2">修改默认插槽2</span><br>
+            <span slot="slot3">修改默认插槽3</span><br>
+        </cpn>
+        <span>----------------------------------------------------------------------------------------</span>
+        <h1>作用域插槽</h1>
+        <cpn ref="refs" @itemclick=emit>
+            <div  slot="slot1" slot-scope="slot">
+                <button  v-for="(item,index) in slot.data" @click="buttonClick(item)">
+                    {{item.id}}:{{item.name}}
+                </button>
+            </div>
+        </cpn>
+    </div>
+</body>
+<template id="templates">
+    <div>
+        <h1>按钮</h1>
+        <slot name="slot1" :data="categories"><p>默认插槽1</p></slot>
+        <slot name="slot2"><p>默认插槽2</p></slot>
+        <slot name="slot3"><p>默认插槽3</p></slot>
+        <button v-for="(item,index) in categories" @click="buttonClick(item)">
+            {{index}}:{{item.name}}
+        </button>
+    </div>
+</template>
+
+
+<script>
+    //1.子组件
+    const cpn = {
+        template:'#templates',
+        data(){
+            return {
+                categories:[
+                    {id:'1',name:'炸弹'},
+                    {id:'2',name:'炸弹1'},
+                    {id:'3',name:'炸弹2'},
+                    {id:'4',name:'炸弹3'},
+                    {id:'5',name:'炸弹4'},
+                    {id:'6',name:'炸弹5'},
+                ]
+            };
+        },
+        methods: {
+            buttonClick(item){
+                //监听事件并发射出去给上一级
+                this.$emit('itemclick',item);
+                //打印父组件信息
+               console.log(this.$parent.message);
+               //直接找到根节点获取数据
+               console.log(this.$root.message);
+            }
+        }
+    }
+    var app2 = new Vue({
+        el:"#app2",
+        data:{
+            message:"消息"
+        },
+        components: {
+            cpn
+        },
+        methods:{
+            emit(item){
+                //发射出来的事件监听
+                console.log(item);
+                //调用子组件中的值显示
+                console.log( this.$children[0].categories);
+                //这种写法需要给子组件增加ref标签
+                console.log(this.$refs.refs.categories);
+            }
+        }
+    })
+</script>
+</html>

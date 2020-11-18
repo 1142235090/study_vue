@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/js/vue.js"></script>
+</head>
+<body>
+    <div id="app2">
+        <cpn ref="refs" @itemclick=emit></cpn>
+    </div>
+</body>
+<template id="templates">
+    <div>
+        <h1>按钮</h1>
+        <button v-for="(item,index) in categories" @click="buttonClick(item)">
+            {{index}}:{{item.name}}
+        </button>
+    </div>
+</template>
+
+
+<script>
+    //1.子组件
+    const cpn = {
+        template:'#templates',
+        data(){
+            return {
+                categories:[
+                    {id:'1',name:'炸弹'},
+                    {id:'2',name:'炸弹1'},
+                    {id:'3',name:'炸弹2'},
+                    {id:'4',name:'炸弹3'},
+                    {id:'5',name:'炸弹4'},
+                    {id:'6',name:'炸弹5'},
+                ]
+            };
+        },
+        methods: {
+            buttonClick(item){
+                //监听事件并发射出去给上一级
+                this.$emit('itemclick',item);
+                //打印父组件信息
+               console.log(this.$parent.message);
+               //直接找到根节点获取数据
+               console.log(this.$root.message);
+            }
+        }
+    }
+    var app2 = new Vue({
+        el:"#app2",
+        data:{
+            message:"消息"
+        },
+        components: {
+            cpn
+        },
+        methods:{
+            emit(item){
+                //发射出来的事件监听
+                console.log(item);
+                //调用子组件中的值显示
+                console.log( this.$children[0].categories);
+                //这种写法需要给子组件增加ref标签
+                console.log(this.$refs.refs.categories);
+            }
+        }
+    })
+</script>
+</html>

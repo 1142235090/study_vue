@@ -23,7 +23,21 @@
 <script>
     const cpn = {
         template:'#templates',
-        props: ['cstring','cmovies'],
+        props: {
+            'cstring':{
+                type:String,//在这里可以指定多个类型例如 [String,Number]
+                default:'asdasdasd',//也可以是一个function 例如 default：function（）{return ‘dasdasd’}
+                validator:function(value){//可以对数据进行验证
+                    console.log(value);
+                    return value;
+                }
+            },
+            'cmovies':{
+                type:Array,
+                default:['例子1','例子2'],
+                required :true
+            }
+        },
         data(){
             return {};
         },
