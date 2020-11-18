@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/js/vue.js"></script>
+</head>
+<body>
+    <div id="app2">
+        <cpn :cstring='string' :cmovies='movies'></cpn>
+    </div>
+</body>
+<template id="templates">
+    <div>
+        <h1>组件</h1>
+        <p>{{cstring}}</p>
+        <h2>{{cmovies}}</h2>
+    </div>
+</template>
+
+
+<script>
+    const cpn = {
+        template:'#templates',
+        props: ['cstring','cmovies'],
+        data(){
+            return {};
+        },
+        methods:{
+
+        }
+    }
+    var app2 = new Vue({
+        el:"#app2",
+        data:{
+            string:'hello',
+            movies:['海尔兄弟','投名状']
+        },
+        components: {
+            cpn
+        }
+      
+    })
+</script>
+</html>
