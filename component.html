@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/js/vue.js"></script>
+</head>
+<body>
+    <h1>全局组件</h1>
+    <div id='app'>
+        <my-cpn></my-cpn>
+    </div>
+    <h1>局部组件</h1>
+    <div id='app1'>
+        <cpn></cpn>
+    </div>
+    <h1>父子组件</h1>
+    <div id='app2'>
+        <cpn></cpn>
+    </div>
+    
+</body>
+<script>
+    //全局组件
+        //1.创建组件构造器对象
+        const cpnC =  Vue.extend({
+            //模板，容器基本的html
+            template: `
+            <div>
+                <h2>我是全局</h2>
+                <p>我是内容</p>
+                <p>我是内容</p>
+            </div>
+            `
+        })
+        //2.注册组件（全局组件）
+        Vue.component('my-cpn',cpnC);
+        //3.使用组件挂载
+        var app = new Vue({
+            el:"#app",
+            data:{
+                message:"Hello!"
+            }
+        })
+
+
+    //局部组件
+        const cpnC1 =  Vue.extend({
+            //模板，容器基本的html
+            template: `
+            <div>
+                <h2>我是局部组件</h2>
+                <p>我是内容</p>
+                <p>我是内容</p>
+            </div>
+            `
+        })
+        var app1 = new Vue({
+            el:"#app1",
+            components: {
+                cpn: cpnC1
+            }
+        })
+
+    //父子组件
+        const cpnC2 =  Vue.extend({
+            //模板，容器基本的html
+            template: `
+            <div>
+                <h2>我是父组件</h2>
+                <p>我是内容</p>
+                <p>我是内容</p>
+                <cpn></cpn>
+            </div>
+            `,
+            components: {
+                cpn:cpnC
+            }
+        })
+        var app2 = new Vue({
+            el:"#app2",
+            components: {
+                cpn: cpnC2
+            }
+        })
+
+
+</script>
+</html>
