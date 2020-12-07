@@ -1,7 +1,6 @@
 const path = require('path')//引入nodejs中的path
 const webpack = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const htmlWebpack = require('html-webpack-plugin')
 
 module.exports = {
     //导入入口，提供者
@@ -65,15 +64,7 @@ module.exports = {
         }
     },
     plugins:[
-        new UglifyJsPlugin(),
         new webpack.BannerPlugin('这些代码是用来学习vue的！'),
-        new HtmlWebpackPlugin({
-            template : 'index.html'
-        })
-    ],
-    devServer:{
-        contentBase:'./dist',//发布哪个目录
-        port:4567,//端口
-        inline:true//是否实行监听
-    }
+        new htmlWebpack()
+    ]
 }

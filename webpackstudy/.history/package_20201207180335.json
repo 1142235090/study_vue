@@ -24,11 +24,11 @@
     "vue-loader": "^13.0.0",
     "vue-template-compiler": "^2.5.21",
     "webpack": "^3.6.0",
-    "webpack-dev-server": "^2.9.1",
-    "webpack-merge": "^4.1.5"
+    "webpack-dev-server": "^2.9.1"
   },
   "dependencies": {
-    "wangeditor": "^4.5.2"
+    "wangeditor": "^4.5.2",
+    "webpack-merge": "^5.4.0"
   },
   "description": ""
 }

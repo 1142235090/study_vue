@@ -8,7 +8,7 @@ module.exports = {
     entry: './src/js/main.js',
     //导入出口，输出位置
     output:{
-        path:path.resolve(__dirname,'dist'),//node默认使用当前路径
+        path:path.resolve(__dirname,'../dist'),//node默认使用当前路径
         filename:'bundledefault.js'
     },
     module: {
@@ -65,15 +65,9 @@ module.exports = {
         }
     },
     plugins:[
-        new UglifyJsPlugin(),
         new webpack.BannerPlugin('这些代码是用来学习vue的！'),
         new HtmlWebpackPlugin({
             template : 'index.html'
         })
-    ],
-    devServer:{
-        contentBase:'./dist',//发布哪个目录
-        port:4567,//端口
-        inline:true//是否实行监听
-    }
+    ]
 }

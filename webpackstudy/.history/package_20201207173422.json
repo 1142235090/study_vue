@@ -4,8 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config ./src/build/dev.config.js",
-    "server": "webpack-dev-server --open --config ./src/build/dev.config.js"
+    "build": "webpack",
+    "server":"webpack-dev-server"
   },
   "author": "",
   "license": "ISC",
@@ -24,8 +24,7 @@
     "vue-loader": "^13.0.0",
     "vue-template-compiler": "^2.5.21",
     "webpack": "^3.6.0",
-    "webpack-dev-server": "^2.9.1",
-    "webpack-merge": "^4.1.5"
+    "webpack-dev-server": "^2.9.1"
   },
   "dependencies": {
     "wangeditor": "^4.5.2"
