@@ -1,0 +1,16 @@
+{
+  "presets": [
+    ["env", {
+      "modules": false,
+      "targets": {
+        //目的时转化成es5能够在大部分浏览器使用
+        //>1是指适配份额大于百分之一的浏览器，last 2 versions 是浏览器最后两个版本，
+        //ie<8的不适配
+        "browsers": ["> 1%", "last 2 versions", "not ie <= 8"]
+      }
+    }],
+    "stage-2"
+  ],
+  //依赖的插件
+  "plugins": ["transform-vue-jsx", "transform-runtime"]
+}
