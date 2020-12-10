@@ -9,11 +9,10 @@ new Vue({
   //直接render变成了虚拟dom然后变成UI
   render: h => h(App)
   // =>语法相当于
-  // render:function(createElement){
-  //   return createElement(App)
+  // render:function(h){
+  //   return h(App)
   // }
 
-  //createElement是vue内部的一个function
   // 这里主要是将id为app的dom节点，替换成参数APP的内容（就是下方方法的h2），参数h是个function可以把
   // h方法其实就是这个方法：
   // createElement（'h2',{class:'box'},['hello world!']）
