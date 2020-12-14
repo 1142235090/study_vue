@@ -10,14 +10,12 @@ new Vue({
 
 
 // ES6箭头函数
-
 //多个参数
-const func = (num1, num2) => {
-  return num1 + num2;
+const func = (num1,num2) =>{
+  return num1+num2;
 }
+
 //一个参数
-const func2 = num1 => {
+const func2 = num1 =>{
   return num1 * num1;
 }
-//函数只有一行代码
-const func2 = num1 => num1 * 2;
