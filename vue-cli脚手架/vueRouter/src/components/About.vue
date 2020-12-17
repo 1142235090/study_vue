@@ -6,7 +6,10 @@
 
 <script>
 export default {
-  name: 'About'
+  name: 'About',
+  created () {
+    console.log('关于我们组件创建');
+  }
 }
 </script>
 

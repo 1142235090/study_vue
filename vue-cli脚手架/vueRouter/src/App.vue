@@ -5,26 +5,41 @@
     <!-- <router-link to="/about" replace active-class="active">关于我们</router-link> -->
     <button @click="homeClick">首页</button>
     <button @click="aboutClick">关于我们</button>
-    <!-- 一旦上边触发了url改变，就会将指定组件的view显示到router-view位置 -->
-    <router-view></router-view>
+    <button @click="userClick">用户</button>
+
+    <keep-alive exclude="user">
+      <!-- 一旦上边触发了url改变，就会将指定组件的view显示到router-view位置 -->
+      <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 
 <script>
 export default {
   name: 'App',
+  data(){
+    return {
+      userId:'ChriseWarnner'
+    }
+  },
   methods: {
     homeClick(){
       //$router是vue定义的data对象
       // this.$router.push('/home')
       //禁止返回的选项
-      this.$router.replace('/home')
-      console.log("首页");
+      if (this.$route.path !== '/home') {
+        this.$router.replace('/home')
+      }
     },
     aboutClick(){
       //  this.$router.push('/about')
-       this.$router.replace('/about')
-      console.log("关于我们");
+       this.$router.push('/about')
+    },
+    userClick(){
+      //  this.$router.push('/about')
+      if (this.$route.path !== '/user/'+this.userId) {
+        this.$router.replace('/user/'+this.userId)
+      }
     }
   }
 }
